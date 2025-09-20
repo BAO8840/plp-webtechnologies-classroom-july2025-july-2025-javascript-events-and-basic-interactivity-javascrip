@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bello Abdulsalam - Interactive JavaScript Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Bello Abdulsalam’s Interactive Page</h1>
+    <button id="theme-toggle">🌙 Toggle Dark Mode</button>
+  </header>
+
+  <main>
+    <!-- Part 1 & 2: Interactive Elements -->
+    <section>
+      <h2>Counter Game 🎮</h2>
+      <button id="increase-btn">➕ Increase</button>
+      <button id="decrease-btn">➖ Decrease</button>
+      <p>Counter: <span id="counter">0</span></p>
+    </section>
+
+    <section>
+      <h2>FAQ Section 📖</h2>
+      <div class="faq">
+        <h3 class="faq-question">Who is Bello Abdulsalam?</h3>
+        <p class="faq-answer hidden">I am a student of forensic science, passionate about digital forensics, data analysis, and science education.</p>
+      </div>
+      <div class="faq">
+        <h3 class="faq-question">Why practice JavaScript?</h3>
+        <p class="faq-answer hidden">Because JavaScript makes web pages dynamic, engaging, and interactive.</p>
+      </div>
+    </section>
+
+    <!-- Part 3: Form Validation -->
+    <section>
+      <h2>Sign Up Form 📋</h2>
+      <form id="signup-form">
+        <label>
+          Name:
+          <input type="text" id="name" required>
+        </label>
+        <small class="error" id="name-error"></small>
+
+        <label>
+          Email:
+          <input type="text" id="email" required>
+        </label>
+        <small class="error" id="email-error"></small>
+
+        <label>
+          Password:
+          <input type="password" id="password" required>
+        </label>
+        <small class="error" id="password-error"></small>
+
+        <button type="submit">Sign Up</button>
+      </form>
+      <p id="form-success" class="success hidden">✅ Well done Bello Abdulsalam! Your form was submitted successfully!</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+/* Bello Abdulsalam’s Custom Styling */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark-mode {
+  background: #222;
+  color: #f5f5f5;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: white;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.faq-question {
+  cursor: pointer;
+  background: #eee;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.faq-answer {
+  margin: 5px 0 15px 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+
+
+
+// 🌙 Part 1: Event Handling for Dark Mode
+const themeToggleBtn = document.getElementById("theme-toggle");
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  alert("Dark Mode toggled by Bello Abdulsalam 🌙");
+});
+
+// 🎮 Part 2: Counter Game
+let counterValue = 0;
+const counterDisplay = document.getElementById("counter");
+
+document.getElementById("increase-btn").addEventListener("click", () => {
+  counterValue++;
+  counterDisplay.textContent = counterValue;
+});
+
+document.getElementById("decrease-btn").addEventListener("click", () => {
+  counterValue--;
+  counterDisplay.textContent = counterValue;
+});
+
+// 📖 Part 2: FAQ Section
+const faqQuestions = document.querySelectorAll(".faq-question");
+faqQuestions.forEach(q => {
+  q.addEventListener("click", () => {
+    const answer = q.nextElementSibling;
+    answer.classList.toggle("hidden");
+  });
+});
+
+// 📋 Part 3: Form Validation
+const form = document.getElementById("signup-form");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Grab fields
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  // Error elements
+  const nameError = document.getElementById("name-error");
+  const emailError = document.getElementById("email-error");
+  const passwordError = document.getElementById("password-error");
+  const successMsg = document.getElementById("form-success");
+
+  // Reset errors
+  nameError.textContent = "";
+  emailError.textContent = "";
+  passwordError.textContent = "";
+  successMsg.classList.add("hidden");
+
+  let isValid = true;
+
+  // Validate name
+  if (name.length < 2) {
+    nameError.textContent = "Name must be at least 2 characters, Bello.";
+    isValid = false;
+  }
+
+  // Validate email with regex
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!emailPattern.test(email)) {
+    emailError.textContent = "Enter a valid email, Bello.";
+    isValid = false;
+  }
+
+  // Validate password
+  if (password.length < 6) {
+    passwordError.textContent = "Password must be at least 6 characters.";
+    isValid = false;
+  }
+
+  // If valid
+  if (isValid) {
+    successMsg.classList.remove("hidden");
+    form.reset();
+  }
+});
+
+
